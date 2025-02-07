@@ -17,11 +17,11 @@ public class Feedback {
     private String arrivalTime;
     private String departureDate;
     private String departureTime;
-    private Double UserfeedbackRating;
-    private String UserfeedbackComments;
-    private double Userlatitude;
-    private double Userlongitude;
-    private String Useraddress;
+    private Double userfeedbackRating;
+    private String userfeedbackComments;
+    private double userlatitude;
+    private double userlongitude;
+    private String useraddress;
     private String ip;
     
     //Sub department Comments
@@ -35,11 +35,11 @@ public class Feedback {
     private String issuedlicense;
     
     //field which will we get onceQR is scanned
-	private String Policestationname;
-	private String PolicestationRating;
-	private String PolicestationAddress;
-	private double Policestationlatitude;
-	private double Policestationlogintude;
+	private String policestationname;
+	private String policestationRating;
+	private String policestationAddress;
+	private double policestationlatitude;
+	private double policestationlogintude;
 	private String policeStationId;
     
     private LocalDateTime timestamp;
@@ -117,43 +117,43 @@ public class Feedback {
 	}
 
 	public Double getUserfeedbackRating() {
-		return UserfeedbackRating;
+		return userfeedbackRating;
 	}
 
 	public void setUserfeedbackRating(Double userfeedbackRating) {
-		UserfeedbackRating = userfeedbackRating;
+		this.userfeedbackRating = userfeedbackRating;
 	}
 
 	public String getUserfeedbackComments() {
-		return UserfeedbackComments;
+		return userfeedbackComments;
 	}
 
 	public void setUserfeedbackComments(String userfeedbackComments) {
-		UserfeedbackComments = userfeedbackComments;
+		this.userfeedbackComments = userfeedbackComments;
 	}
 
 	public double getUserlatitude() {
-		return Userlatitude;
+		return userlatitude;
 	}
 
 	public void setUserlatitude(double userlatitude) {
-		Userlatitude = userlatitude;
+		this.userlatitude = userlatitude;
 	}
 
 	public double getUserlongitude() {
-		return Userlongitude;
+		return userlongitude;
 	}
 
 	public void setUserlongitude(double userlongitude) {
-		Userlongitude = userlongitude;
+		this.userlongitude = userlongitude;
 	}
 
 	public String getUseraddress() {
-		return Useraddress;
+		return useraddress;
 	}
 
 	public void setUseraddress(String useraddress) {
-		Useraddress = useraddress;
+		this.useraddress = useraddress;
 	}
 
 	public String getIp() {
@@ -213,43 +213,43 @@ public class Feedback {
 	}
 
 	public String getPolicestationname() {
-		return Policestationname;
+		return policestationname;
 	}
 
 	public void setPolicestationname(String policestationname) {
-		Policestationname = policestationname;
+		this.policestationname = policestationname;
 	}
 
 	public String getPolicestationRating() {
-		return PolicestationRating;
+		return policestationRating;
 	}
 
 	public void setPolicestationRating(String policestationRating) {
-		PolicestationRating = policestationRating;
+		this.policestationRating = policestationRating;
 	}
 
 	public String getPolicestationAddress() {
-		return PolicestationAddress;
+		return policestationAddress;
 	}
 
 	public void setPolicestationAddress(String policestationAddress) {
-		PolicestationAddress = policestationAddress;
+		this.policestationAddress = policestationAddress;
 	}
 
 	public double getPolicestationlatitude() {
-		return Policestationlatitude;
+		return policestationlatitude;
 	}
 
 	public void setPolicestationlatitude(double policestationlatitude) {
-		Policestationlatitude = policestationlatitude;
+		this.policestationlatitude = policestationlatitude;
 	}
 
 	public double getPolicestationlogintude() {
-		return Policestationlogintude;
+		return policestationlogintude;
 	}
 
 	public void setPolicestationlogintude(double policestationlogintude) {
-		Policestationlogintude = policestationlogintude;
+		this.policestationlogintude = policestationlogintude;
 	}
 
 	public String getPoliceStationId() {
@@ -285,11 +285,11 @@ public class Feedback {
 		this.arrivalTime = arrivalTime;
 		this.departureDate = departureDate;
 		this.departureTime = departureTime;
-		UserfeedbackRating = userfeedbackRating;
-		UserfeedbackComments = userfeedbackComments;
-		Userlatitude = userlatitude;
-		Userlongitude = userlongitude;
-		Useraddress = useraddress;
+		this.userfeedbackRating = userfeedbackRating;
+		this.userfeedbackComments = userfeedbackComments;
+		this.userlatitude = userlatitude;
+		this.userlongitude = userlongitude;
+		this.useraddress = useraddress;
 		this.ip = ip;
 		this.complaintStatus = complaintStatus;
 		this.subdepartmentremark = subdepartmentremark;
@@ -297,18 +297,13 @@ public class Feedback {
 		this.headofficeremark = headofficeremark;
 		this.expecteddateofresolution = expecteddateofresolution;
 		this.issuedlicense = issuedlicense;
-		Policestationname = policestationname;
-		PolicestationRating = policestationRating;
-		PolicestationAddress = policestationAddress;
-		Policestationlatitude = policestationlatitude;
-		Policestationlogintude = policestationlogintude;
+		this.policestationname = policestationname;
+		this.policestationRating = policestationRating;
+		this.policestationAddress = policestationAddress;
+		this.policestationlatitude = policestationlatitude;
+		this.policestationlogintude = policestationlogintude;
 		this.policeStationId = policeStationId;
 		this.timestamp = timestamp;
-	}
-
-	public Feedback() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -316,17 +311,24 @@ public class Feedback {
 		return "Feedback [id=" + id + ", userName=" + userName + ", contactNumber=" + contactNumber
 				+ ", concerneddepartment=" + concerneddepartment + ", purposeOfVisit=" + purposeOfVisit
 				+ ", arrivalDate=" + arrivalDate + ", arrivalTime=" + arrivalTime + ", departureDate=" + departureDate
-				+ ", departureTime=" + departureTime + ", UserfeedbackRating=" + UserfeedbackRating
-				+ ", UserfeedbackComments=" + UserfeedbackComments + ", Userlatitude=" + Userlatitude
-				+ ", Userlongitude=" + Userlongitude + ", Useraddress=" + Useraddress + ", ip=" + ip
+				+ ", departureTime=" + departureTime + ", userfeedbackRating=" + userfeedbackRating
+				+ ", userfeedbackComments=" + userfeedbackComments + ", userlatitude=" + userlatitude
+				+ ", userlongitude=" + userlongitude + ", useraddress=" + useraddress + ", ip=" + ip
 				+ ", complaintStatus=" + complaintStatus + ", subdepartmentremark=" + subdepartmentremark
 				+ ", departmentremark=" + departmentremark + ", headofficeremark=" + headofficeremark
 				+ ", expecteddateofresolution=" + expecteddateofresolution + ", issuedlicense=" + issuedlicense
-				+ ", Policestationname=" + Policestationname + ", PolicestationRating=" + PolicestationRating
-				+ ", PolicestationAddress=" + PolicestationAddress + ", Policestationlatitude=" + Policestationlatitude
-				+ ", Policestationlogintude=" + Policestationlogintude + ", policeStationId=" + policeStationId
+				+ ", policestationname=" + policestationname + ", policestationRating=" + policestationRating
+				+ ", policestationAddress=" + policestationAddress + ", policestationlatitude=" + policestationlatitude
+				+ ", policestationlogintude=" + policestationlogintude + ", policeStationId=" + policeStationId
 				+ ", timestamp=" + timestamp + "]";
 	}
+
+	public Feedback() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	
     
 	
 }

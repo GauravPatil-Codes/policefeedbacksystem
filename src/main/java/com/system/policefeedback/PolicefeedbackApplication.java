@@ -24,7 +24,9 @@ public class PolicefeedbackApplication {
                        "https://127.0.0.1:5501/",
                        "localhost:8085",
                        "http://127.0.0.1:5500/",
-                       "https://127.0.0.1:5500/"
+                       "https://127.0.0.1:5500/",
+                       "https://solardehydration.com/",
+                       "http://solardehydration.com/"
                        
                        
                        

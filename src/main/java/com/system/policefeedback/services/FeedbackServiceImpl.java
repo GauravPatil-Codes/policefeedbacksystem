@@ -8,6 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -88,5 +92,51 @@ public class FeedbackServiceImpl implements FeedbackService {
             feedbackRepository.delete(feedback);
             return true;
         }).orElse(false);
+    }
+
+	public List<Feedback> getFeedbackByPoliceStationId(String policeStationId) {
+		// TODO Auto-generated method stub
+		return feedbackRepository.findByPoliceStationId(policeStationId);
+	}
+	
+	@Override
+    public List<Feedback> getFeedbackByWeek() {
+        LocalDateTime startOfWeek = LocalDate.now().with(java.time.DayOfWeek.MONDAY).atStartOfDay();
+        LocalDateTime endOfWeek = startOfWeek.plusDays(7).with(LocalTime.MAX);
+        return feedbackRepository.findByTimestampBetween(startOfWeek, endOfWeek);
+    }
+
+    @Override
+    public List<Feedback> getFeedbackByMonth() {
+        LocalDateTime startOfMonth = LocalDate.now().withDayOfMonth(1).atStartOfDay();
+        LocalDateTime endOfMonth = startOfMonth.plusMonths(1).minusDays(1).with(LocalTime.MAX);
+        return feedbackRepository.findByTimestampBetween(startOfMonth, endOfMonth);
+    }
+
+    @Override
+    public List<Feedback> getFeedbackByDate(LocalDate date) {
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = startOfDay.with(LocalTime.MAX);
+        return feedbackRepository.findByTimestampBetween(startOfDay, endOfDay);
+    }
+
+    @Override
+    public List<Feedback> getFeedbackByRating(double rating) {
+        return feedbackRepository.findByUserfeedbackRating(rating);
+    }
+
+    @Override
+    public List<Feedback> getFeedbackByPoliceStationName(String policeStationName) {
+        return feedbackRepository.findByPolicestationnameContainingIgnoreCase(policeStationName);
+    }
+
+    @Override
+    public List<Feedback> getFeedbackByUsername(String username) {
+        return feedbackRepository.findByUserNameContainingIgnoreCase(username);
+    }
+
+    @Override
+    public List<Feedback> searchFeedbackByKeyword(String keyword) {
+        return feedbackRepository.searchFeedbackByKeyword(keyword);
     }
 }
