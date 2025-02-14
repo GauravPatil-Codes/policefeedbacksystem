@@ -23,14 +23,18 @@ public class Feedback {
     private double userlongitude;
     private String useraddress;
     private String ip;
+    private String userSatisfied;
     
     //Sub department Comments
     private String complaintStatus;
     private String subdepartmentremark;
+    private LocalDateTime subdepartmenttimestamp;
     //department Comments
     private String departmentremark;
+    private LocalDateTime departmenttimestamp;
     //Headoffice Comments
     private String headofficeremark;
+    private LocalDateTime headofficetimestamp;
     private String expecteddateofresolution;
     private String issuedlicense;
     
@@ -41,6 +45,10 @@ public class Feedback {
 	private double policestationlatitude;
 	private double policestationlogintude;
 	private String policeStationId;
+    
+	// New fields to store the references
+    private String subdivisionId; // Store subdivision ID
+    private String headOfficeId; // Store head office ID
     
     private LocalDateTime timestamp;
 
@@ -164,6 +172,14 @@ public class Feedback {
 		this.ip = ip;
 	}
 
+	public String getUserSatisfied() {
+		return userSatisfied;
+	}
+
+	public void setUserSatisfied(String userSatisfied) {
+		this.userSatisfied = userSatisfied;
+	}
+
 	public String getComplaintStatus() {
 		return complaintStatus;
 	}
@@ -180,6 +196,14 @@ public class Feedback {
 		this.subdepartmentremark = subdepartmentremark;
 	}
 
+	public LocalDateTime getSubdepartmenttimestamp() {
+		return subdepartmenttimestamp;
+	}
+
+	public void setSubdepartmenttimestamp(LocalDateTime subdepartmenttimestamp) {
+		this.subdepartmenttimestamp = subdepartmenttimestamp;
+	}
+
 	public String getDepartmentremark() {
 		return departmentremark;
 	}
@@ -188,12 +212,28 @@ public class Feedback {
 		this.departmentremark = departmentremark;
 	}
 
+	public LocalDateTime getDepartmenttimestamp() {
+		return departmenttimestamp;
+	}
+
+	public void setDepartmenttimestamp(LocalDateTime departmenttimestamp) {
+		this.departmenttimestamp = departmenttimestamp;
+	}
+
 	public String getHeadofficeremark() {
 		return headofficeremark;
 	}
 
 	public void setHeadofficeremark(String headofficeremark) {
 		this.headofficeremark = headofficeremark;
+	}
+
+	public LocalDateTime getHeadofficetimestamp() {
+		return headofficetimestamp;
+	}
+
+	public void setHeadofficetimestamp(LocalDateTime headofficetimestamp) {
+		this.headofficetimestamp = headofficetimestamp;
 	}
 
 	public String getExpecteddateofresolution() {
@@ -260,6 +300,22 @@ public class Feedback {
 		this.policeStationId = policeStationId;
 	}
 
+	public String getSubdivisionId() {
+		return subdivisionId;
+	}
+
+	public void setSubdivisionId(String subdivisionId) {
+		this.subdivisionId = subdivisionId;
+	}
+
+	public String getHeadOfficeId() {
+		return headOfficeId;
+	}
+
+	public void setHeadOfficeId(String headOfficeId) {
+		this.headOfficeId = headOfficeId;
+	}
+
 	public LocalDateTime getTimestamp() {
 		return timestamp;
 	}
@@ -271,10 +327,12 @@ public class Feedback {
 	public Feedback(String id, String userName, String contactNumber, String concerneddepartment, String purposeOfVisit,
 			String arrivalDate, String arrivalTime, String departureDate, String departureTime,
 			Double userfeedbackRating, String userfeedbackComments, double userlatitude, double userlongitude,
-			String useraddress, String ip, String complaintStatus, String subdepartmentremark, String departmentremark,
-			String headofficeremark, String expecteddateofresolution, String issuedlicense, String policestationname,
-			String policestationRating, String policestationAddress, double policestationlatitude,
-			double policestationlogintude, String policeStationId, LocalDateTime timestamp) {
+			String useraddress, String ip, String userSatisfied, String complaintStatus, String subdepartmentremark,
+			LocalDateTime subdepartmenttimestamp, String departmentremark, LocalDateTime departmenttimestamp,
+			String headofficeremark, LocalDateTime headofficetimestamp, String expecteddateofresolution,
+			String issuedlicense, String policestationname, String policestationRating, String policestationAddress,
+			double policestationlatitude, double policestationlogintude, String policeStationId, String subdivisionId,
+			String headOfficeId, LocalDateTime timestamp) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -291,10 +349,14 @@ public class Feedback {
 		this.userlongitude = userlongitude;
 		this.useraddress = useraddress;
 		this.ip = ip;
+		this.userSatisfied = userSatisfied;
 		this.complaintStatus = complaintStatus;
 		this.subdepartmentremark = subdepartmentremark;
+		this.subdepartmenttimestamp = subdepartmenttimestamp;
 		this.departmentremark = departmentremark;
+		this.departmenttimestamp = departmenttimestamp;
 		this.headofficeremark = headofficeremark;
+		this.headofficetimestamp = headofficetimestamp;
 		this.expecteddateofresolution = expecteddateofresolution;
 		this.issuedlicense = issuedlicense;
 		this.policestationname = policestationname;
@@ -303,7 +365,14 @@ public class Feedback {
 		this.policestationlatitude = policestationlatitude;
 		this.policestationlogintude = policestationlogintude;
 		this.policeStationId = policeStationId;
+		this.subdivisionId = subdivisionId;
+		this.headOfficeId = headOfficeId;
 		this.timestamp = timestamp;
+	}
+
+	public Feedback() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -314,19 +383,21 @@ public class Feedback {
 				+ ", departureTime=" + departureTime + ", userfeedbackRating=" + userfeedbackRating
 				+ ", userfeedbackComments=" + userfeedbackComments + ", userlatitude=" + userlatitude
 				+ ", userlongitude=" + userlongitude + ", useraddress=" + useraddress + ", ip=" + ip
-				+ ", complaintStatus=" + complaintStatus + ", subdepartmentremark=" + subdepartmentremark
-				+ ", departmentremark=" + departmentremark + ", headofficeremark=" + headofficeremark
-				+ ", expecteddateofresolution=" + expecteddateofresolution + ", issuedlicense=" + issuedlicense
-				+ ", policestationname=" + policestationname + ", policestationRating=" + policestationRating
-				+ ", policestationAddress=" + policestationAddress + ", policestationlatitude=" + policestationlatitude
+				+ ", userSatisfied=" + userSatisfied + ", complaintStatus=" + complaintStatus + ", subdepartmentremark="
+				+ subdepartmentremark + ", subdepartmenttimestamp=" + subdepartmenttimestamp + ", departmentremark="
+				+ departmentremark + ", departmenttimestamp=" + departmenttimestamp + ", headofficeremark="
+				+ headofficeremark + ", headofficetimestamp=" + headofficetimestamp + ", expecteddateofresolution="
+				+ expecteddateofresolution + ", issuedlicense=" + issuedlicense + ", policestationname="
+				+ policestationname + ", policestationRating=" + policestationRating + ", policestationAddress="
+				+ policestationAddress + ", policestationlatitude=" + policestationlatitude
 				+ ", policestationlogintude=" + policestationlogintude + ", policeStationId=" + policeStationId
-				+ ", timestamp=" + timestamp + "]";
+				+ ", subdivisionId=" + subdivisionId + ", headOfficeId=" + headOfficeId + ", timestamp=" + timestamp
+				+ "]";
 	}
 
-	public Feedback() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	
+    
+	
 
 	
     

@@ -14,32 +14,26 @@ public class PolicefeedbackApplication {
 	}
 
 	@Bean
-    public WebMvcConfigurer configure() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry reg) {
-                reg.addMapping("/**")
-                   .allowedOrigins(
-                       "http://127.0.0.1:5501/",
-                       "https://127.0.0.1:5501/",
-                       "localhost:8085",
-                       "http://127.0.0.1:5500/",
-                       "https://127.0.0.1:5500/",
-                       "https://solardehydration.com/",
-                       "http://solardehydration.com/"
-                       
-                       
-                       
-                       
-                       
-                       
-                       
-                   )
-                   .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
-                   .allowedHeaders("*")
-                   .allowCredentials(true);
-            }
-        };
+	public WebMvcConfigurer configure() {
+	    return new WebMvcConfigurer() {
+	        @Override
+	        public void addCorsMappings(CorsRegistry registry) {
+	            registry.addMapping("/**")
+	                .allowedOrigins(
+	                    "http://127.0.0.1:5501",
+	                    "https://127.0.0.1:5501",
+	                    "http://localhost:8085",
+	                    "http://127.0.0.1:5500",
+	                    "https://127.0.0.1:5500",
+	                    "https://solardehydration.com",
+	                    "http://solardehydration.com"
+	                )
+	                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
+	                .allowedHeaders("*")
+	                .allowCredentials(true);
+	        }
+	    };
 	}
+
   
 }

@@ -21,6 +21,7 @@ public class FeedbackController {
 
     private final FeedbackServiceImpl feedbackService;
 
+
     @Autowired
     public FeedbackController(FeedbackServiceImpl feedbackService) {
         this.feedbackService = feedbackService;
@@ -35,7 +36,7 @@ public class FeedbackController {
     }
 
     // GET API to fetch all feedbacks with pagination
-    @GetMapping("/feedback")
+    @GetMapping("/getfeedback")
     public ResponseEntity<Page<Feedback>> getAllFeedback(Pageable pageable) {
         Page<Feedback> feedbacks = feedbackService.getAllFeedback(pageable);
         return ResponseEntity.ok(feedbacks);
@@ -127,5 +128,48 @@ public class FeedbackController {
     public ResponseEntity<List<Feedback>> searchFeedbackByKeyword(@RequestParam String keyword) {
         List<Feedback> feedbackList = feedbackService.searchFeedbackByKeyword(keyword);
         return ResponseEntity.ok(feedbackList);
+        
+        
+        
     }
+    
+    //feedback by headofficeid
+    
+    @GetMapping("/feedback/by-headoffice/{headofficeId}")
+    public ResponseEntity<List<Feedback>> getFeedbackByHeadoffice(@PathVariable String headofficeId) {
+        List<Feedback> feedbackList = feedbackService.getFeedbackByHeadoffice(headofficeId);
+        return ResponseEntity.ok(feedbackList);
+    }
+    
+    //feedback by subdivisionid
+    @GetMapping("/feedback/by-subdivision/{subdivisionId}")
+    public ResponseEntity<List<Feedback>> getFeedbackBySubdivision(@PathVariable String subdivisionId) {
+        List<Feedback> feedbackList = feedbackService.getFeedbackBySubdivision(subdivisionId);
+        return ResponseEntity.ok(feedbackList);
+    }
+
+    //getaverage rating headoffice
+    @GetMapping("/rating/by-headoffice/{headofficeId}")
+    public ResponseEntity<Double> getAverageRatingByHeadoffice(@PathVariable String headofficeId) {
+        double avgRating = feedbackService.getAverageRatingByHeadoffice(headofficeId);
+        return ResponseEntity.ok(avgRating);
+    }
+
+    //getaverage rating by subdivisionid
+    @GetMapping("/rating/by-subdivision/{subdivisionId}")
+    public ResponseEntity<Double> getAverageRatingBySubdivision(@PathVariable String subdivisionId) {
+        double avgRating = feedbackService.getAverageRatingBySubdivision(subdivisionId);
+        return ResponseEntity.ok(avgRating);
+    }
+
+    
+    //getaverage rating by policestationid
+    @GetMapping("/rating/by-policestation/{policeStationId}")
+    public ResponseEntity<Double> getAverageRatingByPoliceStation(@PathVariable String policeStationId) {
+        double avgRating = feedbackService.getAverageRatingByPoliceStation(policeStationId);
+        return ResponseEntity.ok(avgRating);
+    }
+
+    
+
 }

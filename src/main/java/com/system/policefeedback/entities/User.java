@@ -10,7 +10,7 @@ public class User {
     private String id;
     private String username;
     private String password; // Stored as hashed
-    private String role; // POLICE_DEPARTMENT, POLICE_SUB_DEPARTMENT, HEAD_OFFICE
+    private String role; // POLICE_DEPARTMENT, POLICE_SUB_DEPARTMENT, HEAD_OFFICE, Citizen
     private String departmentName;
     private String contactNumber;
     

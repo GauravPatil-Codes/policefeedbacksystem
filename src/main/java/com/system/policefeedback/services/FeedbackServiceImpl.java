@@ -18,10 +18,14 @@ import java.util.Optional;
 public class FeedbackServiceImpl implements FeedbackService {
 
     private final FeedbackRepository feedbackRepository;
+    
+    
+    private PoliceStationServiceImpl policeStationService;
 
     @Autowired
-    public FeedbackServiceImpl(FeedbackRepository feedbackRepository) {
+    public FeedbackServiceImpl(FeedbackRepository feedbackRepository, PoliceStationServiceImpl policeStationService) {
         this.feedbackRepository = feedbackRepository;
+        this.policeStationService = policeStationService;
     }
 
     @Override
@@ -42,7 +46,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public Optional<Feedback> updateFeedback(String id, Feedback updatedFeedback) {
         return feedbackRepository.findById(id).map(existingFeedback -> {
-            // User information
+            // Update basic user details
             existingFeedback.setUserName(updatedFeedback.getUserName());
             existingFeedback.setContactNumber(updatedFeedback.getContactNumber());
             existingFeedback.setConcerneddepartment(updatedFeedback.getConcerneddepartment());
@@ -57,16 +61,20 @@ public class FeedbackServiceImpl implements FeedbackService {
             existingFeedback.setUserlongitude(updatedFeedback.getUserlongitude());
             existingFeedback.setUseraddress(updatedFeedback.getUseraddress());
             existingFeedback.setIp(updatedFeedback.getIp());
+            existingFeedback.setUserSatisfied(updatedFeedback.getUserSatisfied());
 
             // Sub-department comments
             existingFeedback.setComplaintStatus(updatedFeedback.getComplaintStatus());
             existingFeedback.setSubdepartmentremark(updatedFeedback.getSubdepartmentremark());
+            existingFeedback.setSubdepartmenttimestamp(updatedFeedback.getSubdepartmenttimestamp());
 
             // Department comments
             existingFeedback.setDepartmentremark(updatedFeedback.getDepartmentremark());
+            existingFeedback.setDepartmenttimestamp(updatedFeedback.getDepartmenttimestamp());
 
-            // Headoffice comments
+            // Head Office comments
             existingFeedback.setHeadofficeremark(updatedFeedback.getHeadofficeremark());
+            existingFeedback.setHeadofficetimestamp(updatedFeedback.getHeadofficetimestamp());
             existingFeedback.setExpecteddateofresolution(updatedFeedback.getExpecteddateofresolution());
             existingFeedback.setIssuedlicense(updatedFeedback.getIssuedlicense());
 
@@ -78,12 +86,24 @@ public class FeedbackServiceImpl implements FeedbackService {
             existingFeedback.setPolicestationlogintude(updatedFeedback.getPolicestationlogintude());
             existingFeedback.setPoliceStationId(updatedFeedback.getPoliceStationId());
 
+            // Subdivision & Head Office references
+            existingFeedback.setSubdivisionId(updatedFeedback.getSubdivisionId());
+            existingFeedback.setHeadOfficeId(updatedFeedback.getHeadOfficeId());
+
             // Timestamp
             existingFeedback.setTimestamp(updatedFeedback.getTimestamp());
 
-            return feedbackRepository.save(existingFeedback);
+            // Save updated feedback
+            Feedback savedFeedback = feedbackRepository.save(existingFeedback);
+
+            // Update the police station rating
+            policeStationService.updatePoliceStationRating(existingFeedback.getPoliceStationId());
+
+            return savedFeedback;
         });
     }
+
+
 
 
     @Override
@@ -138,5 +158,37 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public List<Feedback> searchFeedbackByKeyword(String keyword) {
         return feedbackRepository.searchFeedbackByKeyword(keyword);
+    }
+    
+    @Override
+    public List<Feedback> getFeedbackByHeadoffice(String headofficeId) {
+        return feedbackRepository.findByHeadOfficeId(headofficeId);
+    }
+
+    @Override
+    public List<Feedback> getFeedbackBySubdivision(String subdivisionId) {
+        return feedbackRepository.findBySubdivisionId(subdivisionId);
+    }
+
+    @Override
+    public double getAverageRatingByHeadoffice(String headofficeId) {
+        List<Feedback> feedbackList = feedbackRepository.findByHeadOfficeId(headofficeId);
+        return calculateAverageRating(feedbackList);
+    }
+
+    @Override
+    public double getAverageRatingBySubdivision(String subdivisionId) {
+        List<Feedback> feedbackList = feedbackRepository.findBySubdivisionId(subdivisionId);
+        return calculateAverageRating(feedbackList);
+    }
+
+    @Override
+    public double getAverageRatingByPoliceStation(String policeStationId) {
+        List<Feedback> feedbackList = feedbackRepository.findByPoliceStationId(policeStationId);
+        return calculateAverageRating(feedbackList);
+    }
+
+    private double calculateAverageRating(List<Feedback> feedbackList) {
+        return feedbackList.stream().mapToDouble(Feedback::getUserfeedbackRating).average().orElse(0.0);
     }
 }

@@ -26,4 +26,13 @@ public interface FeedbackService {
     List<Feedback> getFeedbackByPoliceStationName(String policeStationName);
     List<Feedback> getFeedbackByUsername(String username);
     List<Feedback> searchFeedbackByKeyword(String keyword);
+    List<Feedback> getFeedbackByHeadoffice(String headofficeId);
+
+	List<Feedback> getFeedbackBySubdivision(String subdivisionId);
+
+	double getAverageRatingByHeadoffice(String headofficeId);
+
+	double getAverageRatingBySubdivision(String subdivisionId);
+
+	double getAverageRatingByPoliceStation(String policeStationId);
 }

@@ -1,97 +1,150 @@
 package com.system.policefeedback.entities;
 
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.List;
 
 @Document
 public class PoliceStations {
 	@Id
 	private String id;
-	private String Policestationname;
-	private String PolicestationQRlink;
-	private String PolicestationRating;
-	private String PolicestationAddress;
-	private double Policestationlatitude;
-	private double Policestationlogintude;
-	private String ContactNumber;
+	private String policestationName;
+	private String policestationQRLink;
+	private double policestationRating; // Store the rating as a numeric value
+	private String policestationAddress;
+	private double policestationLatitude;
+	private double policestationLongitude;
+	private String contactNumber;
+
+	// Embedded Subdivision
+	private Subdivision subdivision;
+
+	// Embedded Head Office
+	private HeadOffice headOffice;
+
+	// List of feedbacks for quick access
+	private List<String> feedbackIds; // Store Feedback document IDs
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
-		id = id;
+		this.id = id;
 	}
-	public String getPolicestationname() {
-		return Policestationname;
+
+	public String getPolicestationName() {
+		return policestationName;
 	}
-	public void setPolicestationname(String policestationname) {
-		Policestationname = policestationname;
+
+	public void setPolicestationName(String policestationName) {
+		this.policestationName = policestationName;
 	}
-	public String getPolicestationQRlink() {
-		return PolicestationQRlink;
+
+	public String getPolicestationQRLink() {
+		return policestationQRLink;
 	}
-	public void setPolicestationQRlink(String policestationQRlink) {
-		PolicestationQRlink = policestationQRlink;
+
+	public void setPolicestationQRLink(String policestationQRLink) {
+		this.policestationQRLink = policestationQRLink;
 	}
-	public String getPolicestationRating() {
-		return PolicestationRating;
+
+	public double getPolicestationRating() {
+		return policestationRating;
 	}
-	public void setPolicestationRating(String policestationRating) {
-		PolicestationRating = policestationRating;
+
+	public void setPolicestationRating(double policestationRating) {
+		this.policestationRating = policestationRating;
 	}
+
 	public String getPolicestationAddress() {
-		return PolicestationAddress;
+		return policestationAddress;
 	}
+
 	public void setPolicestationAddress(String policestationAddress) {
-		PolicestationAddress = policestationAddress;
+		this.policestationAddress = policestationAddress;
 	}
-	public double getPolicestationlatitude() {
-		return Policestationlatitude;
+
+	public double getPolicestationLatitude() {
+		return policestationLatitude;
 	}
-	public void setPolicestationlatitude(double policestationlatitude) {
-		Policestationlatitude = policestationlatitude;
+
+	public void setPolicestationLatitude(double policestationLatitude) {
+		this.policestationLatitude = policestationLatitude;
 	}
-	public double getPolicestationlogintude() {
-		return Policestationlogintude;
+
+	public double getPolicestationLongitude() {
+		return policestationLongitude;
 	}
-	public void setPolicestationlogintude(double policestationlogintude) {
-		Policestationlogintude = policestationlogintude;
+
+	public void setPolicestationLongitude(double policestationLongitude) {
+		this.policestationLongitude = policestationLongitude;
 	}
+
 	public String getContactNumber() {
-		return ContactNumber;
+		return contactNumber;
 	}
+
 	public void setContactNumber(String contactNumber) {
-		ContactNumber = contactNumber;
+		this.contactNumber = contactNumber;
 	}
-	public PoliceStations(String id, String policestationname, String policestationQRlink, String policestationRating,
-			String policestationAddress, double policestationlatitude, double policestationlogintude,
-			String contactNumber) {
+
+	public Subdivision getSubdivision() {
+		return subdivision;
+	}
+
+	public void setSubdivision(Subdivision subdivision) {
+		this.subdivision = subdivision;
+	}
+
+	public HeadOffice getHeadOffice() {
+		return headOffice;
+	}
+
+	public void setHeadOffice(HeadOffice headOffice) {
+		this.headOffice = headOffice;
+	}
+
+	public List<String> getFeedbackIds() {
+		return feedbackIds;
+	}
+
+	public void setFeedbackIds(List<String> feedbackIds) {
+		this.feedbackIds = feedbackIds;
+	}
+
+	public PoliceStations(String id, String policestationName, String policestationQRLink, double policestationRating,
+			String policestationAddress, double policestationLatitude, double policestationLongitude,
+			String contactNumber, Subdivision subdivision, HeadOffice headOffice, List<String> feedbackIds) {
 		super();
-		id = id;
-		Policestationname = policestationname;
-		PolicestationQRlink = policestationQRlink;
-		PolicestationRating = policestationRating;
-		PolicestationAddress = policestationAddress;
-		Policestationlatitude = policestationlatitude;
-		Policestationlogintude = policestationlogintude;
-		ContactNumber = contactNumber;
+		this.id = id;
+		this.policestationName = policestationName;
+		this.policestationQRLink = policestationQRLink;
+		this.policestationRating = policestationRating;
+		this.policestationAddress = policestationAddress;
+		this.policestationLatitude = policestationLatitude;
+		this.policestationLongitude = policestationLongitude;
+		this.contactNumber = contactNumber;
+		this.subdivision = subdivision;
+		this.headOffice = headOffice;
+		this.feedbackIds = feedbackIds;
 	}
+
+	@Override
+	public String toString() {
+		return "PoliceStations [id=" + id + ", policestationName=" + policestationName + ", policestationQRLink="
+				+ policestationQRLink + ", policestationRating=" + policestationRating + ", policestationAddress="
+				+ policestationAddress + ", policestationLatitude=" + policestationLatitude
+				+ ", policestationLongitude=" + policestationLongitude + ", contactNumber=" + contactNumber
+				+ ", subdivision=" + subdivision + ", headOffice=" + headOffice + ", feedbackIds=" + feedbackIds + "]";
+	}
+
 	public PoliceStations() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	@Override
-	public String toString() {
-		return "PoliceStations [Id=" + id + ", Policestationname=" + Policestationname + ", PolicestationQRlink="
-				+ PolicestationQRlink + ", PolicestationRating=" + PolicestationRating + ", PolicestationAddress="
-				+ PolicestationAddress + ", Policestationlatitude=" + Policestationlatitude
-				+ ", Policestationlogintude=" + Policestationlogintude + ", ContactNumber=" + ContactNumber + "]";
-	}
 	
-	
-	
-	
+	// Getters and Setters
 	
 	
 }
-
-
