@@ -35,4 +35,6 @@ public interface FeedbackService {
 	double getAverageRatingBySubdivision(String subdivisionId);
 
 	double getAverageRatingByPoliceStation(String policeStationId);
+
+	List<Feedback> getFeedbackByDepartment(String department);
 }

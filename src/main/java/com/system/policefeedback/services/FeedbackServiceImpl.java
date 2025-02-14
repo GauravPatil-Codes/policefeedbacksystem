@@ -191,4 +191,10 @@ public class FeedbackServiceImpl implements FeedbackService {
     private double calculateAverageRating(List<Feedback> feedbackList) {
         return feedbackList.stream().mapToDouble(Feedback::getUserfeedbackRating).average().orElse(0.0);
     }
+    
+    @Override
+    public List<Feedback> getFeedbackByDepartment(String department) {
+        return feedbackRepository.findByConcerneddepartment(department);
+    }
+
 }

@@ -170,6 +170,13 @@ public class FeedbackController {
         return ResponseEntity.ok(avgRating);
     }
 
-    
+    //feedback by department
+ // Get feedback by concerned department
+    @GetMapping("/feedback/by-department/{department}")
+    public ResponseEntity<List<Feedback>> getFeedbackByDepartment(@PathVariable String department) {
+        List<Feedback> feedbackList = feedbackService.getFeedbackByDepartment(department);
+        return ResponseEntity.ok(feedbackList);
+    }
+
 
 }

@@ -29,5 +29,7 @@ public interface FeedbackRepository extends MongoRepository<Feedback, String> {
 	// New query methods for Subdivision and Head Office
 	List<Feedback> findByHeadOfficeId(String headOfficeId);
 	List<Feedback> findBySubdivisionId(String subdivisionId);
+	List<Feedback> findByConcerneddepartment(String concerneddepartment);
+
 }
 
