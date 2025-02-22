@@ -20,7 +20,7 @@ public interface FeedbackService {
 
     boolean deleteFeedback(String id);
     List<Feedback> getFeedbackByWeek();
-    List<Feedback> getFeedbackByMonth();
+    
     List<Feedback> getFeedbackByDate(LocalDate date);
     List<Feedback> getFeedbackByRating(double rating);
     List<Feedback> getFeedbackByPoliceStationName(String policeStationName);
@@ -37,4 +37,14 @@ public interface FeedbackService {
 	double getAverageRatingByPoliceStation(String policeStationId);
 
 	List<Feedback> getFeedbackByDepartment(String department);
+
+	List<Feedback> getFeedbackByMonth(String month);
+
+	List<Feedback> getFeedbackBySubDivisionId(String subdivisionId);
+	
+	double getUserSatisfiedRatingByPoliceStation(String policeStationId);
+	
+    double getUserSatisfiedRatingBySubdivision(String subdivisionId);
+    
+    double getUserSatisfiedRatingByHeadOffice(String headOfficeId);
 }

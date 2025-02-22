@@ -55,6 +55,12 @@ public class AuthController {
             response.put("role", user.getRole());
             response.put("departmentName", user.getDepartmentName());
             response.put("id", user.getId());
+            response.put("policeStationId", user.getPoliceStationId());
+            response.put("policeStationName", user.getPoliceStationName());
+            response.put("subDivisionId", user.getSubDivisionId());
+            response.put("subDivisionName", user.getSubDivisionName());
+            response.put("headOfficeId", user.getHeadOfficeId());
+            response.put("headOfficeName", user.getHeadOfficeName());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             logger.error("Login error", e);

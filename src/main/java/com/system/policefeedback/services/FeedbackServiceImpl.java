@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
@@ -126,12 +127,27 @@ public class FeedbackServiceImpl implements FeedbackService {
         return feedbackRepository.findByTimestampBetween(startOfWeek, endOfWeek);
     }
 
-    @Override
-    public List<Feedback> getFeedbackByMonth() {
-        LocalDateTime startOfMonth = LocalDate.now().withDayOfMonth(1).atStartOfDay();
-        LocalDateTime endOfMonth = startOfMonth.plusMonths(1).minusDays(1).with(LocalTime.MAX);
-        return feedbackRepository.findByTimestampBetween(startOfMonth, endOfMonth);
-    }
+	@Override
+	public List<Feedback> getFeedbackByMonth(String month) {
+	    // Convert the month name to Month enum
+	    Month requestedMonth;
+	    try {
+	        requestedMonth = Month.valueOf(month.toUpperCase());  // Convert "January" to Month.JANUARY
+	    } catch (IllegalArgumentException e) {
+	        throw new IllegalArgumentException("Invalid month name: " + month); // Handle invalid month
+	    }
+
+	    // Get current year (Assuming we're fetching for the current year)
+	    int currentYear = LocalDate.now().getYear();
+
+	    // Define the start and end of the requested month
+	    LocalDateTime startOfMonth = LocalDate.of(currentYear, requestedMonth, 1).atStartOfDay();
+	    LocalDateTime endOfMonth = startOfMonth.plusMonths(1).minusDays(1).with(LocalTime.MAX);
+
+	    // Fetch filtered data
+	    return feedbackRepository.findByTimestampBetween(startOfMonth, endOfMonth);
+	}
+
 
     @Override
     public List<Feedback> getFeedbackByDate(LocalDate date) {
@@ -196,5 +212,39 @@ public class FeedbackServiceImpl implements FeedbackService {
     public List<Feedback> getFeedbackByDepartment(String department) {
         return feedbackRepository.findByConcerneddepartment(department);
     }
+
+    @Override
+	public List<Feedback> getFeedbackBySubDivisionId(String subdivisionId) {
+		// TODO Auto-generated method stub
+		return feedbackRepository.findBySubdivisionId(subdivisionId);
+	}
+
+    
+    @Override
+    public double getUserSatisfiedRatingByPoliceStation(String policeStationId) {
+        List<Feedback> feedbackList = feedbackRepository.findByPoliceStationId(policeStationId);
+        return calculateUserSatisfactionRating(feedbackList);
+    }
+
+    @Override
+    public double getUserSatisfiedRatingBySubdivision(String subdivisionId) {
+        List<Feedback> feedbackList = feedbackRepository.findBySubdivisionId(subdivisionId);
+        return calculateUserSatisfactionRating(feedbackList);
+    }
+
+    @Override
+    public double getUserSatisfiedRatingByHeadOffice(String headOfficeId) {
+        List<Feedback> feedbackList = feedbackRepository.findByHeadOfficeId(headOfficeId);
+        return calculateUserSatisfactionRating(feedbackList);
+    }
+
+ // Helper method to calculate user satisfaction rating
+    private double calculateUserSatisfactionRating(List<Feedback> feedbackList) {
+        return feedbackList.stream()
+                .mapToDouble(feedback -> "Yes".equalsIgnoreCase(feedback.getUserSatisfied()) ? 5.0 : 0.0)
+                .average()
+                .orElse(0.0);
+    }
+	
 
 }

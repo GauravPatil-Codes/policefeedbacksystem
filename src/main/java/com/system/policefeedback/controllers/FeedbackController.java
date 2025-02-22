@@ -3,6 +3,7 @@ package com.system.policefeedback.controllers;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -79,6 +80,86 @@ public class FeedbackController {
         return ResponseEntity.ok(feedbackList);
     }
     
+ // New API to get feedback by police station ID with filters
+    @GetMapping("/feedback/by-policestation-filter/{policeStationId}")
+    public ResponseEntity<List<Feedback>> getFeedbackByPoliceStationIdWithFilters(
+            @PathVariable String policeStationId,
+            @RequestParam(required = false) Double rating,  // Updated to Double
+            @RequestParam(required = false) String month,   // Month is passed as String (e.g., "January")
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        
+        List<Feedback> feedbackList = feedbackService.getFeedbackByPoliceStationId(policeStationId);
+
+        // Apply filters
+        if (rating != null) {
+            feedbackList = feedbackList.stream()
+                    .filter(feedback -> feedback.getUserfeedbackRating() != null 
+                            && feedback.getUserfeedbackRating().equals(rating))
+                    .collect(Collectors.toList());
+        }
+
+        if (month != null) {
+            feedbackList = feedbackList.stream()
+                    .filter(feedback -> feedback.getTimestamp() != null 
+                            && feedback.getTimestamp().getMonth().name().equalsIgnoreCase(month))
+                    .collect(Collectors.toList());
+        }
+
+        if (date != null) {
+            feedbackList = feedbackList.stream()
+                    .filter(feedback -> feedback.getTimestamp() != null 
+                            && feedback.getTimestamp().toLocalDate().equals(date))
+                    .collect(Collectors.toList());
+        }
+
+        if (feedbackList.isEmpty()) {
+            return ResponseEntity.noContent().build(); // No feedback found
+        }
+
+        return ResponseEntity.ok(feedbackList);
+    }
+
+ // New API to get feedback by Sub Division ID with filters
+    @GetMapping("/feedback/by-subdivision-filter/{subdivisionId}")
+    public ResponseEntity<List<Feedback>> getFeedbackBySubDivisionIdWithFilters(
+            @PathVariable String subdivisionId,
+            @RequestParam(required = false) Double rating,  // Filter by rating
+            @RequestParam(required = false) String month,   // Filter by month (e.g., "January")
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        
+        List<Feedback> feedbackList = feedbackService.getFeedbackBySubDivisionId(subdivisionId);
+
+        // Apply filters
+        if (rating != null) {
+            feedbackList = feedbackList.stream()
+                    .filter(feedback -> feedback.getUserfeedbackRating() != null 
+                            && feedback.getUserfeedbackRating().equals(rating))
+                    .collect(Collectors.toList());
+        }
+
+        if (month != null) {
+            feedbackList = feedbackList.stream()
+                    .filter(feedback -> feedback.getTimestamp() != null 
+                            && feedback.getTimestamp().getMonth().name().equalsIgnoreCase(month))
+                    .collect(Collectors.toList());
+        }
+
+        if (date != null) {
+            feedbackList = feedbackList.stream()
+                    .filter(feedback -> feedback.getTimestamp() != null 
+                            && feedback.getTimestamp().toLocalDate().equals(date))
+                    .collect(Collectors.toList());
+        }
+
+        if (feedbackList.isEmpty()) {
+            return ResponseEntity.noContent().build(); // No feedback found
+        }
+
+        return ResponseEntity.ok(feedbackList);
+    }
+
+    
+    
  // 1. Get feedback by week
     @GetMapping("/feedback/by-week")
     public ResponseEntity<List<Feedback>> getFeedbackByWeek() {
@@ -86,10 +167,13 @@ public class FeedbackController {
         return ResponseEntity.ok(feedbackList);
     }
 
-    // 2. Get feedback by month
+ // Get feedback by month (Dynamic Filtering)
     @GetMapping("/feedback/by-month")
-    public ResponseEntity<List<Feedback>> getFeedbackByMonth() {
-        List<Feedback> feedbackList = feedbackService.getFeedbackByMonth();
+    public ResponseEntity<List<Feedback>> getFeedbackByMonth(@RequestParam String month) {
+        List<Feedback> feedbackList = feedbackService.getFeedbackByMonth(month);
+        if (feedbackList.isEmpty()) {
+            return ResponseEntity.noContent().build(); // Return 204 No Content if no feedback found
+        }
         return ResponseEntity.ok(feedbackList);
     }
 

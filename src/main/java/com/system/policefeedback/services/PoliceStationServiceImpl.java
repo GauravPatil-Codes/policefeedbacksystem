@@ -217,7 +217,33 @@ public class PoliceStationServiceImpl implements PoliceStationService {
 	    else if (responseHours > 24) return 3;
 	    else if (responseHours > 12) return 4;
 	    else return 5;
+	    
+	    
+	    
+	    
 	}
+	
+	
+	@Override
+	public double getPoliceStationResponseTimeRating(String policeStationId) {
+	    Optional<PoliceStations> policeStationOpt = policeStationRepository.findById(policeStationId);
+	    return policeStationOpt.map(PoliceStations::getPolicestationRating).orElse(0.0);
+	}
+
+	@Override
+	public double getSubdivisionResponseTimeRating(String subdivisionId) {
+	    List<PoliceStations> policeStations = policeStationRepository.findBySubdivisionId(subdivisionId);
+	    return policeStations.stream().mapToDouble(PoliceStations::getPolicestationRating).average().orElse(0.0);
+	}
+
+	@Override
+	public double getHeadOfficeResponseTimeRating(String headOfficeId) {
+	    List<PoliceStations> policeStations = policeStationRepository.findByHeadOfficeId(headOfficeId);
+	    return policeStations.stream().mapToDouble(PoliceStations::getPolicestationRating).average().orElse(0.0);
+	}
+
+	
+	
 }
 	
 
